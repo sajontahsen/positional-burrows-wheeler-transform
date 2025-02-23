@@ -5,7 +5,7 @@
 ## project structure
 
 ```
-pbwt_project/
+positional-burrows-wheeler-transform/
 │
 ├── include/
 │   └── pbwt.h                   # header file for PBWT class and function declarations
