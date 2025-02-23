@@ -5,18 +5,18 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    vector<vector<int>> X = {
-        {0, 1, 0, 1, 0, 1},
-        {1, 1, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1},
-        {0, 1, 1, 1, 1, 0},
+    vector<vector<int>> sample_data = {
         {0, 0, 0, 0, 0, 0},
-        {1, 0, 0, 0, 1, 0},
-        {1, 1, 0, 0, 0, 1},
-        {0, 1, 0, 1, 1, 0}
+        {0, 0, 1, 0, 0, 0},
+        {1, 0, 1, 0, 1, 0},
+        {0, 1, 0, 1, 0, 1},
+        {1, 1, 1, 0, 0, 0},
+        {1, 1, 1, 1, 1, 1},
+        {0, 1, 0, 0, 1, 0},
+        {0, 0, 1, 1, 1, 1},
     };
 
-    PBWT pbwt(X);
+    PBWT pbwt(sample_data);
     string mode = "separate";
 
     if (argc > 1) {
