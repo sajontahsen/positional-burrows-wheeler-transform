@@ -20,8 +20,6 @@ pbwt_project/
 └── readme.md                   
 ```
 
----
-
 ## run the code
 
 **build**
@@ -40,8 +38,6 @@ make
 ```bash
 ./build/pbwt single 
 ```
-
----
 
 ## console output
 
