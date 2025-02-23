@@ -1,47 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "pbwt.h"
 
 using namespace std;
 
-void print_columns_upto_index(const vector<vector<int>>& X, int k, const vector<int>& pos_prefix_array) {
-    cout << "\nMatrix till column " << k << ":\n";
-    for (int idx : pos_prefix_array) {
-        for (int col = 0; col <= k; col++) {
-            cout << X[idx][col] << " ";
-        }
-        cout << "\n";
-    }
-}
-
-void print_LongMatches(vector<int>& a, vector<int>& b, int k){
-        cout << "reporting match for K: " << k;
-
-        cout << "\na: ";
-        for (int it: a) cout << it << " ";
-
-        cout << "\nb: ";
-        for (int it: b) cout << it << " ";
-        cout << endl;  
-}
-
-void print_SetMaximalMatches(int a_k_i, int a_k_j, int d_k, int k){
-    cout << "reporting maximal match of " 
-        << a_k_i << " to " << a_k_j 
-        << " from " << d_k << " to " << k 
-        << " ->( " << a_k_i << ' ' << a_k_j << ' ' << d_k << ' ' << k << " )"
-        <<endl;
-
-}
-
-void concatenate(vector<int>& dst, vector<int>& a, vector<int>& b){
-    /* util fn: dst = a + b */
-    dst.clear();
-    dst.insert(dst.end(), a.begin(), a.end());
-    dst.insert(dst.end(), b.begin(), b.end());
-}
-
-void PBWT_singlepass(const vector<vector<int>>& X, int L = 3){
+void PBWT::runAlgorithmsSingleSweep(int L){
     int M = X.size();
     int N = X[0].size();
 
@@ -153,23 +117,4 @@ void PBWT_singlepass(const vector<vector<int>>& X, int L = 3){
         lmb.clear();
     }
 
-}
-
-int main() {
-
-    vector<vector<int>> X = {
-        {0, 1, 0, 1, 0, 1},
-        // {1, 0, 1, 0, 1, 0}
-        {1, 1, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1},
-        {0, 1, 1, 1, 1, 0},
-        {0, 0, 0, 0, 0, 0},
-        {1, 0, 0, 0, 1, 0},
-        {1, 1, 0, 0, 0, 1},
-        {0, 1, 0, 1, 1, 0}
-    };
-
-    PBWT_singlepass(X);
-
-    return 0;
 }

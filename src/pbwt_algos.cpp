@@ -1,60 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "pbwt.h"
 
 using namespace std;
 
-// input matrix 
-vector<vector<int>> X = {
-    {0, 1, 0, 1, 0, 1},
-    // {1, 0, 1, 0, 1, 0}
-    {1, 1, 0, 0, 0, 1},
-    {1, 1, 1, 1, 1, 1},
-    {0, 1, 1, 1, 1, 0},
-    {0, 0, 0, 0, 0, 0},
-    {1, 0, 0, 0, 1, 0},
-    {1, 1, 0, 0, 0, 1},
-    {0, 1, 0, 1, 1, 0}
-};
-
-void print_columns_upto_index(const vector<vector<int>>& X, int k, const vector<int>& pos_prefix_array) {
-    cout << "\nMatrix till column " << k << ":\n";
-    for (int idx : pos_prefix_array) {
-        for (int col = 0; col <= k; col++) {
-            cout << X[idx][col] << " ";
-        }
-        cout << "\n";
-    }
-}
-
-void print_LongMatches(vector<int>& a, vector<int>& b, int k){
-        cout << "reporting match for K: " << k;
-
-        cout << "\na: ";
-        for (int it: a) cout << it << " ";
-
-        cout << "\nb: ";
-        for (int it: b) cout << it << " ";
-        cout << endl;  
-}
-
-void print_SetMaximalMatches(int a_k_i, int a_k_j, int d_k, int k){
-    cout << "reporting maximal match of " 
-        << a_k_i << " to " << a_k_j 
-        << " from " << d_k << " to " << k 
-        << " ->( " << a_k_i << ' ' << a_k_j << ' ' << d_k << ' ' << k << " )"
-        <<endl;
-
-}
-
-void concatenate(vector<int>& dst, vector<int>& a, vector<int>& b){
-    /* util fn: dst = a + b */
-    dst.clear();
-    dst.insert(dst.end(), a.begin(), a.end());
-    dst.insert(dst.end(), b.begin(), b.end());
-}
-
-void BuildPrefixAndDivergenceArrays(vector<int>& pos_prefix_array, vector<int>& div_array, int k, bool debug = false){
+void PBWT::buildPrefixAndDivergenceArrays(vector<int>& pos_prefix_array, vector<int>& div_array, int k, bool debug){
     /* algo 1 and 2 */
 
     int M = pos_prefix_array.size();
@@ -95,12 +46,12 @@ void BuildPrefixAndDivergenceArrays(vector<int>& pos_prefix_array, vector<int>& 
         cout << "\ndiv: ";
         for (int val : div_array) cout << val << " ";
         cout << endl;
-        print_columns_upto_index(X, k, pos_prefix_array);
+        print_columns_upto_index(k, pos_prefix_array);
     }
 
 }
 
-void ReportLongMatches(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L){
+void PBWT::reportLongMatches(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L){
     
     /* algo 3 */
 
@@ -134,7 +85,7 @@ void ReportLongMatches(vector<int>& pos_prefix_array, vector<int>& div_array, in
     }
 }
 
-void ReportSetMaximalMatches(vector<int>& pos_prefix_array, vector<int>& div_array, int k){
+void PBWT::reportSetMaximalMatches(vector<int>& pos_prefix_array, vector<int>& div_array, int k){
 
     /* algo 4 */
 
@@ -186,7 +137,7 @@ void ReportSetMaximalMatches(vector<int>& pos_prefix_array, vector<int>& div_arr
     }
 }
 
-int main() {
+void PBWT::runAlgoritmsSeparate(int L) {
 
     int M = X.size();    
     int N = X[0].size(); 
@@ -199,9 +150,8 @@ int main() {
     }
 
     for (int i = 0; i < N; i++){
-        ReportLongMatches(pos_prefix_array, div_array, i, 3);
-        ReportSetMaximalMatches(pos_prefix_array, div_array, i);
-        BuildPrefixAndDivergenceArrays(pos_prefix_array, div_array, i);
+        reportLongMatches(pos_prefix_array, div_array, i, 3);
+        reportSetMaximalMatches(pos_prefix_array, div_array, i);
+        buildPrefixAndDivergenceArrays(pos_prefix_array, div_array, i);
     }
-    return 0;
 }
