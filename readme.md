@@ -40,8 +40,7 @@ make
 ```
 
 ## console output
-
-- TBA
+![console output](./blobs/output.png)
 
 ---
 *PRs and suggestions are always welcome!*
