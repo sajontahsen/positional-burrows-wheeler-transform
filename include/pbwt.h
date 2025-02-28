@@ -20,7 +20,7 @@ private:
     void buildPrefixAndDivergenceArrays(vector<int>& pos_prefix_array, vector<int>& div_array, int k, bool debug = false);
     void reportLongMatches(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L);
     void reportSetMaximalMatches(vector<int>& pos_prefix_array, vector<int>& div_array, int k);
-    void reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L);
+    void reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L, bool lastrun = false);
 
     // util fns
     void print_LongMatches(vector<int>& a, vector<int>& b, int k);

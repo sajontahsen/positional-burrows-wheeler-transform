@@ -85,7 +85,7 @@ void PBWT::reportLongMatches(vector<int>& pos_prefix_array, vector<int>& div_arr
     }
 }
 
-void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L){
+void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L, bool lastrun){
     
     /* algo 3 */
 
@@ -100,7 +100,7 @@ void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>
                 for (int ia = ilast; ia < i; ia++){
                     for (int ib = ia + 1, start = 0; ib < i; ib++){
                         start = max(start, div_array[ib]);
-                        if (X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
+                        if (lastrun || X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
                             saveLongMatchesWithStart(
                                 pos_prefix_array[ia], 
                                 pos_prefix_array[ib], 
@@ -117,7 +117,7 @@ void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>
         }
 
         int idx = pos_prefix_array[i];
-        int val = X[idx][k];
+        int val = X[idx][lastrun?k-1:k];
 
         if (val == 0){
             a.push_back(idx);
@@ -132,7 +132,7 @@ void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>
         for (int ia = ilast; ia < M; ia++){
             for (int ib = ia + 1, start = 0; ib < M; ib++){
                 start = max(start, div_array[ib]);
-                if (X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
+                if (lastrun || X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
                     saveLongMatchesWithStart(
                         pos_prefix_array[ia], 
                         pos_prefix_array[ib], 
@@ -214,4 +214,7 @@ void PBWT::runAlgoritmsSeparate(int L) {
         reportSetMaximalMatches(pos_prefix_array, div_array, i);
         buildPrefixAndDivergenceArrays(pos_prefix_array, div_array, i);
     }
+    
+    // wip: for the case when the match extends to the final index
+    reportLongMatchesWithStart(pos_prefix_array, div_array, N, L, true);
 }
