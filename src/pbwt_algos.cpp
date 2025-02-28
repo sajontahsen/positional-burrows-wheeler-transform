@@ -85,6 +85,62 @@ void PBWT::reportLongMatches(vector<int>& pos_prefix_array, vector<int>& div_arr
     }
 }
 
+void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>& div_array, int k, int L){
+    
+    /* algo 3 */
+
+    int M = pos_prefix_array.size();
+
+    vector<int> a, b;
+    int ilast = 0;
+
+    for (int i = 0; i < M; i++){
+        if (div_array[i] > k - L){
+            if (a.size() && b.size()){
+                for (int ia = ilast; ia < i; ia++){
+                    for (int ib = ia + 1, start = 0; ib < i; ib++){
+                        start = max(start, div_array[ib]);
+                        if (X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
+                            cout << pos_prefix_array[ia] << "\t" 
+                                << pos_prefix_array[ib] << "\t" 
+                                << start << "\t" 
+                                << k-1 << endl;
+                        }
+                    }
+                }
+            }
+            a.clear();
+            b.clear();
+            ilast = i;
+        }
+
+        int idx = pos_prefix_array[i];
+        int val = X[idx][k];
+
+        if (val == 0){
+            a.push_back(idx);
+        }
+        else{
+            b.push_back(idx);
+        }
+    }
+
+    // added checking for any remaining matches
+    if (a.size() && b.size()){ 
+        for (int ia = ilast; ia < M; ia++){
+            for (int ib = ia + 1, start = 0; ib < M; ib++){
+                start = max(start, div_array[ib]);
+                if (X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
+                    cout << pos_prefix_array[ia] << "\t" 
+                        << pos_prefix_array[ib] << "\t" 
+                        << start << "\t" 
+                        << k-1 << endl;
+                }
+            }
+        }
+    }
+}
+
 void PBWT::reportSetMaximalMatches(vector<int>& pos_prefix_array, vector<int>& div_array, int k){
 
     /* algo 4 */
@@ -150,7 +206,7 @@ void PBWT::runAlgoritmsSeparate(int L) {
     }
 
     for (int i = 0; i < N; i++){
-        reportLongMatches(pos_prefix_array, div_array, i, 3);
+        reportLongMatchesWithStart(pos_prefix_array, div_array, i, 3);
         reportSetMaximalMatches(pos_prefix_array, div_array, i);
         buildPrefixAndDivergenceArrays(pos_prefix_array, div_array, i);
     }
