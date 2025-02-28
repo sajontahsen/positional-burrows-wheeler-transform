@@ -101,10 +101,12 @@ void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>
                     for (int ib = ia + 1, start = 0; ib < i; ib++){
                         start = max(start, div_array[ib]);
                         if (X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
-                            cout << pos_prefix_array[ia] << "\t" 
-                                << pos_prefix_array[ib] << "\t" 
-                                << start << "\t" 
-                                << k-1 << endl;
+                            saveLongMatchesWithStart(
+                                pos_prefix_array[ia], 
+                                pos_prefix_array[ib], 
+                                start, 
+                                k-1
+                            );
                         }
                     }
                 }
@@ -131,10 +133,12 @@ void PBWT::reportLongMatchesWithStart(vector<int>& pos_prefix_array, vector<int>
             for (int ib = ia + 1, start = 0; ib < M; ib++){
                 start = max(start, div_array[ib]);
                 if (X[pos_prefix_array[ib]][k] != X[pos_prefix_array[ia]][k]){
-                    cout << pos_prefix_array[ia] << "\t" 
-                        << pos_prefix_array[ib] << "\t" 
-                        << start << "\t" 
-                        << k-1 << endl;
+                    saveLongMatchesWithStart(
+                        pos_prefix_array[ia], 
+                        pos_prefix_array[ib], 
+                        start, 
+                        k-1
+                    );
                 }
             }
         }
@@ -181,13 +185,13 @@ void PBWT::reportSetMaximalMatches(vector<int>& pos_prefix_array, vector<int>& d
 
         for (int j = m + 1; j < i; j++){
             if (div_array[i] < k){  // added check for 0 length matches
-                print_SetMaximalMatches(pos_prefix_array[i], pos_prefix_array[j], div_array[i], k);
+                saveSetMaximalMatches(pos_prefix_array[i], pos_prefix_array[j], div_array[i], k);
             }
         }
 
         for (int j = i + 1; j < n; j++){
             if (div_array[i+1] < k){ // added check for 0 length matches 
-                print_SetMaximalMatches(pos_prefix_array[i], pos_prefix_array[j], div_array[i+1], k);
+                saveSetMaximalMatches(pos_prefix_array[i], pos_prefix_array[j], div_array[i+1], k);
             }
         }
     }
@@ -206,7 +210,7 @@ void PBWT::runAlgoritmsSeparate(int L) {
     }
 
     for (int i = 0; i < N; i++){
-        reportLongMatchesWithStart(pos_prefix_array, div_array, i, 3);
+        reportLongMatchesWithStart(pos_prefix_array, div_array, i, L);
         reportSetMaximalMatches(pos_prefix_array, div_array, i);
         buildPrefixAndDivergenceArrays(pos_prefix_array, div_array, i);
     }

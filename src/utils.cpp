@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <fstream>
 #include "pbwt.h"
 
 using namespace std;
@@ -14,6 +15,16 @@ void PBWT::print_LongMatches(vector<int>& a, vector<int>& b, int k){
     cout << endl;  
 }
 
+void PBWT::saveLongMatchesWithStart(int a, int b, int start, int end, string filename){
+    ofstream outfile(filename, ios::app); 
+    if (!outfile) {
+        cerr << "error opening output file!!!" << endl;
+        return;
+    }
+
+    outfile << a << "\t" << b << "\t" << start << "\t" << end << endl;
+}
+
 void PBWT::print_SetMaximalMatches(int a_k_i, int a_k_j, int d_k, int k){
     cout << "reporting maximal match of " 
         << a_k_i << " to " << a_k_j 
@@ -22,6 +33,17 @@ void PBWT::print_SetMaximalMatches(int a_k_i, int a_k_j, int d_k, int k){
         <<endl;
 
 }
+
+void PBWT::saveSetMaximalMatches(int a_k_i, int a_k_j, int d_k, int k, string filename){
+    ofstream outfile(filename, ios::app); 
+    if (!outfile) {
+        cerr << "error opening output file!!!" << endl;
+        return;
+    }
+
+    outfile << a_k_i << "\t" << a_k_j << "\t" << d_k << "\t" << k << endl;
+}
+
 
 void PBWT::concatenate(vector<int>& dst, vector<int>& a, vector<int>& b){
     // dst = a + b 
