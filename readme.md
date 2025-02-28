@@ -34,7 +34,7 @@ make
 ```bash
 ./build/pbwt
 ```
-**run algorithms on single-sweep mode (default)**
+**run algorithms on single-sweep mode**
 ```bash
 ./build/pbwt single 
 ```
